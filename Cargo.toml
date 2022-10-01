@@ -13,3 +13,4 @@ pyo3 = { version = "0.17.1", features = ["extension-module"] }
 rand = "0.8.4"
 rand_distr = "0.4.3"
 rayon = "1.5"
+numpy = "0.17.2"

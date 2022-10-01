@@ -1,12 +1,10 @@
 # Poisson Benchmark
 
-Important note: `fish-rs` is multithreaded using `rayon`, and so is the function called in `bench_poisson_rust.py` but for now it appears it only uses a single core despite using the same parallelized Rust implementation.
-
 Numpy vs Rust vs Python using Py03 bindings
 
-* `bench_poisson.py` (Python, numpy)
-* `bench_poisson_rust.py` (Python calling Rust using Py03)
-* `fish-rs/target/release/fish-rs` (Rust)
+* `bench_poisson.py` (Python, numpy) (single threaded)
+* `bench_poisson_rust.py` (Python calling Rust using Py03) (Multithreaded)
+* `fish-rs/target/release/fish-rs` (Rust) (Multithreaded)
 
 ## Quickstart
 
@@ -38,20 +36,19 @@ Time for generating `10_000_000` values with a Poisson distribution.
 ```
 ❯ hyperfine --warmup 2 "python bench_poisson.py" "python bench_poisson_rust.py" "./fish-rs/target/release/fish-rs"
 Benchmark 1: python bench_poisson.py
-  Time (mean ± σ):     340.2 ms ±   2.1 ms    [User: 519.9 ms, System: 924.3 ms]
-  Range (min … max):   337.4 ms … 343.4 ms    10 runs
+  Time (mean ± σ):     340.7 ms ±   2.3 ms    [User: 520.1 ms, System: 915.2 ms]
+  Range (min … max):   338.3 ms … 344.0 ms    10 runs
  
 Benchmark 2: python bench_poisson_rust.py
-  Time (mean ± σ):     301.8 ms ±   1.2 ms    [User: 473.0 ms, System: 118.1 ms]
-  Range (min … max):   299.6 ms … 304.0 ms    10 runs
+  Time (mean ± σ):     106.5 ms ±   3.1 ms    [User: 524.2 ms, System: 841.4 ms]
+  Range (min … max):   104.0 ms … 116.6 ms    27 runs
  
 Benchmark 3: ./fish-rs/target/release/fish-rs
-  Time (mean ± σ):      20.0 ms ±   0.7 ms    [User: 253.9 ms, System: 28.1 ms]
-  Range (min … max):    18.5 ms …  22.0 ms    139 runs
-
-
+  Time (mean ± σ):      20.3 ms ±   1.0 ms    [User: 256.1 ms, System: 26.7 ms]
+  Range (min … max):    18.6 ms …  24.1 ms    137 runs
+ 
 Summary
   './fish-rs/target/release/fish-rs' ran
-   15.07 ± 0.53 times faster than 'python bench_poisson_rust.py'
-   16.98 ± 0.61 times faster than 'python bench_poisson.py'
+    5.25 ± 0.30 times faster than 'python bench_poisson_rust.py'
+   16.80 ± 0.82 times faster than 'python bench_poisson.py'
 ```
